@@ -1,0 +1,29 @@
+[tool.poetry]
+package-mode = false
+name = "src"
+version = "0.1.0"
+description = ""
+authors = ["Steve Higgs <stevejhiggs@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.112.0"}
+types-redis = "^4.6.0.20240806"
+redis = "^5.0.8"
+httpx = "^0.27.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+ruff = "^0.5.7"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
