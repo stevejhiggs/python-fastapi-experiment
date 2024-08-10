@@ -17,14 +17,8 @@ I'm sure it will be full of non-python ways of doing things and should not be ta
 
 In order for the items endpoint to function you will need a redis server running on localhost.
 
-### Setup gotchas
-
-By default vscode will not use the virtualenv you have set up and you'll need to use the Python: Select Interpreter command from the Command Palette (⇧⌘P) and select the `Poetry` venv.
-
-The most obvious way this will show up is that vscode will claim it cant find the packages you have installed.
-
 ## Available commands
 
-- `poetry run fastapi dev src/main.py` - run the api in dev mode
+- `poetry run dev` - run the api in dev mode
 - `poetry run pytest` - run tests
 - `poetry run ruff check` - lint
