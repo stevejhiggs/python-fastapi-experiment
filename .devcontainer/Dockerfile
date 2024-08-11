@@ -5,7 +5,7 @@
 ARG VARIANT="3.12-bullseye"
 FROM mcr.microsoft.com/vscode/devcontainers/python:1-${VARIANT}
 # Poetry
-ARG POETRY_VERSION="none"
-RUN if [ "${POETRY_VERSION}" != "none" ]; then su vscode -c "umask 0002 && pip3 install poetry==${POETRY_VERSION}"; fi
+ARG PDM_VERSION="none"
+RUN if [ "${PDM_VERSION}" != "none" ]; then su vscode -c "umask 0002 && pip3 install pdm==${PDM_VERSION}"; fi
 
 

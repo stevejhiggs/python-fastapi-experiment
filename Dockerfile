@@ -1,28 +1,26 @@
-# The builder image, used to build the virtual environment
-FROM python:3.12-slim-bookworm AS builder
 
-RUN pip install poetry==1.8.3
+ARG PYTHON_BASE=3.12-slim
+# build stage
+FROM python:$PYTHON_BASE AS builder
 
-ENV POETRY_NO_INTERACTION=1 \
-    POETRY_VIRTUALENVS_IN_PROJECT=1 \
-    POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_CACHE_DIR=/tmp/poetry_cache
+# install PDM
+RUN pip install -U pdm
+# disable update check
+ENV PDM_CHECK_UPDATE=false
+# copy files
+COPY pyproject.toml pdm.lock README.md /project/
 
-WORKDIR /app
+# install dependencies and project into the local packages directory
+WORKDIR /project
+RUN pdm install --check --prod --no-editable
 
-COPY pyproject.toml poetry.lock ./
-RUN touch README.md
+# run stage
+FROM python:$PYTHON_BASE AS runner
 
-RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
+# retrieve packages from build stage
+COPY --from=builder /project/.venv/ /project/.venv
+ENV PATH="/project/.venv/bin:$PATH"
 
-# The runtime image, used to just run the code provided its virtual environment
-FROM python:3.12-slim-bookworm AS runtime
-
-ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH"
-
-COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
-
-COPY src ./src
+COPY src src
 
 ENTRYPOINT ["python", "-m", "src.main"]
