@@ -11,7 +11,7 @@ app.include_router(info.router)
 
 # Run in dev mode with reloading available
 def dev():
-    """Launched with `poetry run dev` at root level"""
+    """Launched with `pdm run dev` at root level"""
     uvicorn.run("src.main:app", host="0.0.0.0", port=8000, reload=True)
 
 
