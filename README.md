@@ -8,7 +8,7 @@ I'm sure it will be full of non-python ways of doing things and should not be ta
 
 ### Via devcontainers
 
-- have the dev containers 
+- have the dev containers extension install and when prompted by vscode choose to open the code in a dev container.
 
 ### Directly on your machine
 
